@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition>
+
+		<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:submenu label="Internship" >
+					<p:menuitem value="List" action="#{adminMB.navigateToListInternshipPage}"
+						disabled="false" />
+					<p:menuitem value="Add"  action="#{adminMB.navigateToAddInternship}"
+						disabled="false" />
+					<p:menuitem value="Search"
+						action="#{menuView.save}" disabled="false" />
+				</p:submenu>
+
+				<p:submenu label="Student" >
+					<p:menuitem value="List" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="false" />
+					<p:menuitem value="Add" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="false" />
+					<p:menuitem value="Search" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="false" />
+				</p:submenu>
+
+				<p:submenu label="Faculty Member" >
+					<p:menuitem value="List" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="false" />
+					<p:menuitem value="Add" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="false" />
+					<p:menuitem value="Search" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="false" />
+				</p:submenu>
+
+				<f:facet name="options">
+					<p:commandButton type="button" value="Logout"
+						icon="ui-icon-extlink" disabled="false"/>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+
+	</ui:composition>
+</h:body>
+</html>

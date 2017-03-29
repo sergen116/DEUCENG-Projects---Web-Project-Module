@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+ 
+</h:head>
+<h:body>
+	<ui:composition
+		template="/template/commonAdmin/commonLayoutAdmin.xhtml">
+
+		<ui:define name="content">
+			<h:form>
+				<p:spacer height="10" />
+				<p:growl id="messages" />
+				<!-- <p:messages id="messages"  autoUpdate="true" />  -->
+
+				<h:panelGrid id="matchGrid" styleClass="loginForm" columns="2"
+					cellpadding="5">
+					
+					<p:outputLabel for="studentSelection" value="Student :" />
+					<p:selectOneMenu id="studentSelection"
+						value="#{internshipMB.student}" converter="#{studentConverter}"
+						var="t"
+						disabled="true"
+						required="true"
+					    height="130"
+						style="height:30px;"
+						filter="true" effect="fade"
+						filterMatchMode="startsWith">
+						<f:selectItems value="#{internshipMB.possibleStudents}"
+							var="student" itemValue="#{student}" itemLabel="#{student}" />
+
+						<p:column>
+							<h:outputText value="#{t}" />
+						</p:column>
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="inputInternshipType" value="Internship Type :" />
+					<p:selectOneMenu id="inputInternshipType"
+						value="#{internshipMB.type}"
+						required="true">
+						<f:selectItem itemValue="SOFTWARE" itemLabel="SOFTWARE" />
+						<f:selectItem itemValue="HARDWARE" itemLabel="HARDWARE" />
+					</p:selectOneMenu>
+
+					
+
+					<p:outputLabel for="StartDate" value="Start Date :" />
+					<p:calendar id="StartDate" value="#{internshipMB.start_date}"
+						required="true" pattern="yyyy-MM-dd"
+						requiredMessage="Start Date : You must fill the field"
+						converterMessage="Start Date : Invalid ! Expected format 2016-06-21">
+						<p:ajax event="dateSelect" listener="#{internshipMB.onDateSelect}"
+							update="messages" />
+						<f:convertDateTime pattern="yyyy-MM-dd" />
+					</p:calendar>
+
+					<p:outputLabel for="EndDate" value="End Date :" />
+					<p:calendar id="EndDate" value="#{internshipMB.end_date}"
+						required="true" pattern="yyyy-MM-dd"
+						requiredMessage="End Date : You must fill the field"
+						converterMessage="End Date : Invalid ! Expected format 2016-06-21">
+						<p:ajax event="dateSelect" listener="#{internshipMB.onDateSelect}"
+							update="messages" />
+						<f:convertDateTime pattern="yyyy-MM-dd" />
+					</p:calendar>
+
+					<p:outputLabel for="inputCompany" value="Company :" />
+					<p:inputText id="inputCompany" value="#{internshipMB.company_name}"
+						required="true"
+						requiredMessage="Company : You must enter company name">
+					</p:inputText>
+
+					<p:outputLabel for="inputAreas" value="Working Areas :" />
+					<p:inputText id="inputAreas" value="#{internshipMB.working_areas}"
+						required="true"
+						requiredMessage="Working Areas : You must fill the field">
+					</p:inputText>
+			
+					<p:commandButton style=" background-color: #3366ff;  color:white"
+						icon="ui-icon-disk" update="messages"
+						action="#{internshipMB.editInternship}" value="Submit To Update" ajax="true">
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

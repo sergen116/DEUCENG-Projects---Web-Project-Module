@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition
+		template="/template/commonFacultyMember/commonLayoutFacultyMember.xhtml">
+
+		<ui:define name="content">
+			<h3 class="first">You can select min. 1 or max. 3 students for
+				the project !</h3>
+			<h:form id="form">
+				<p:spacer height="60" />
+				<p:growl id="messages" showDetail="true" />
+
+				<p:wizard flowListener="#{newProjectMB.onFlowProcess}">
+					<p:tab id="studentSelection" title="Student">
+						<p:panel header="Student Selection">
+							<p:dataTable var="student" value="#{newProjectMB.students}"
+								id="checkboxDT" widgetVar="studentsTable" scrollable="true"
+								scrollHeight="210"
+								emptyMessage="No students found with given criteria"
+								filteredValue="#{newProjectMB.filteredStudents}"
+								selection="#{newProjectMB.selectedStudents}"
+								rowKey="#{student.student_ID}">
+
+								<p:column selectionMode="multiple"
+									style="width:16px;text-align:center" />
+
+								<p:column filterBy="#{student.student_ID}" headerText="Id"
+									footerText="contains" filterMatchMode="contains">
+									<h:outputText value="#{student.student_ID}" />
+								</p:column>
+
+								<p:column filterBy="#{student.student_FullName}"
+									headerText="FullName" footerText="contains"
+									filterMatchMode="contains">
+									<h:outputText value="#{student.student_FullName}" />
+								</p:column>
+
+								<p:column filterBy="#{student.student_interests}"
+									headerText="Interests" footerText="contains"
+									filterMatchMode="contains">
+									<h:outputText value="#{student.student_interests}" />
+								</p:column>
+
+								<p:column filterBy="#{student.workingAreas}"
+									headerText="Work Areas At Internship" footerText="contains"
+									filterMatchMode="contains">
+									<h:outputText value="#{student.workingAreas}" />
+								</p:column>
+
+								<p:column filterBy="#{student.GPA}" headerText="GPA"
+									footerText="custom (min)"
+									filterFunction="#{newProjectMB.filterByGPA}">
+									<h:outputText value="#{student.GPA}">
+										<f:convertNumber minFractionDigits="2" />
+									</h:outputText>
+								</p:column>
+
+							</p:dataTable>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="assistantSelect" title="Assistant">
+						<p:panel header="Assign an assistant">
+							<h:panelGrid id="matchGrid" styleClass="loginForm" columns="2"
+								cellpadding="5">
+
+
+								<p:outputLabel for="assistantSelection" value="Assistant :" />
+								<p:selectOneMenu id="assistantSelection"
+									value="#{newProjectMB.assigned_assistant}" var="t"
+									required="true" height="160" style="height:30px;" filter="true"
+									effect="fade" filterMatchMode="contains">
+									<f:selectItems value="#{newProjectMB.researchAssistants}"
+										var="researchAssistant" itemValue="#{researchAssistant}"
+										itemLabel="#{researchAssistant}" />
+
+									<p:column>
+										<h:outputText value="#{t}" />
+									</p:column>
+								</p:selectOneMenu>
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="nameAndDeadline" title="Name and Deadline">
+						<p:panel header="Specify project name and deadline">
+							<p:messages />
+							<h:panelGrid id="Grid" styleClass="loginForm" columns="2"
+								cellpadding="5">
+
+								<p:outputLabel for="Deadline" value="Deadline :" />
+								<p:calendar id="Deadline" value="#{newProjectMB.deadline}"
+									required="true" pattern="yyyy-MM-dd"
+									requiredMessage="Deadline : You must fill the field"
+									converterMessage="Deadline : Invalid ! Expected format 2016-06-21">
+									<p:ajax event="dateSelect"
+										listener="#{internshipMB.onDateSelect}" update="messages" />
+									<f:convertDateTime pattern="yyyy-MM-dd" />
+								</p:calendar>
+
+								<p:outputLabel for="projectName" value="Project Name :" />
+								<p:inputText id="projectName"
+									value="#{newProjectMB.project_name}" required="true"
+									requiredMessage="Project Name : You must enter project name">
+								</p:inputText>
+
+							</h:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="confirm" title="Confirmation">
+						<p:panel header="Confirmation">
+							<p:messages />
+							<h:panelGrid id="confirmation" columns="2" cellpadding="5"
+								columnClasses="grid,grid">
+
+								<h:panelGrid columns="2" columnClasses="label, value">
+									<p:outputLabel value="Name :" />
+									<p:outputLabel style="color:blue;"
+										value="#{newProjectMB.project_name}" />
+								</h:panelGrid>
+								<h:panelGrid columns="2" columnClasses="label, value">
+									<p:outputLabel value="Deadline :" />
+									<p:outputLabel style="color:blue;"
+										value="#{newProjectMB.deadline.toString()}" />
+								</h:panelGrid>
+								<h:panelGrid columns="2" columnClasses="label, value">
+									<p:outputLabel value="Assistant :" />
+									<p:outputLabel style="color:blue;"
+										value="#{newProjectMB.assigned_assistant}" />
+								</h:panelGrid>
+
+								<h:panelGrid columns="2" columnClasses="label, value">
+									<ui:repeat value="#{newProjectMB.selectedStudents}"
+										var="student">
+										<p:outputLabel value="Student : " />
+										<p:outputLabel style="color:blue;"
+											value="#{student.student_FullName} " />
+									</ui:repeat>
+								</h:panelGrid>
+
+							</h:panelGrid>
+
+							<p:commandButton value="Submit"
+								style=" background-color: #3366ff;  color:white"
+								actionListener="#{newProjectMB.editProject}" update="messages"
+								process="@this" />
+						</p:panel>
+					</p:tab>
+
+				</p:wizard>
+			</h:form>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

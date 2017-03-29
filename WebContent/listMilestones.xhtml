@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition
+		template="/template/commonFacultyMember/commonLayoutFacultyMember.xhtml">
+
+		<ui:define name="content">
+
+			<h:form id="form">
+				<p:spacer height="100" />
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:dataTable var="milestone"
+					value="#{facultyMemberMB.all_milestones}"
+					sortBy="#{milestone.project.project_name}">
+					
+					<p:column headerText="Project" >
+						<h:outputText value="#{milestone.project.project_name}" />
+					</p:column>
+					<p:column headerText="Short Summary">
+						<h:outputText value="#{milestone.short_summary}" />
+					</p:column>
+					<p:column headerText="Deadline">
+						<h:outputText value="#{milestone.deadline}" />
+					</p:column>
+					<p:column headerText="Edit">
+						<p:commandButton
+							style=" width: 270px; background-color: #3366ff;  color:white"
+							icon="ui-icon-disk" action="#{facultyMemberMB.navigate_To_Milestone_Edit_Page}"
+							value="Edit" ajax="true">
+							<f:param name="passed_milestone_id"
+								value="#{milestone.id_milestone}" />
+							<f:param name="passed_project_id"
+								value="#{milestone.fk_project_id}" />
+						</p:commandButton>
+					</p:column>
+					<p:column headerText="Remove">
+						<p:commandButton
+							style=" width: 270px; background-color: #3366ff;  color:white"
+							icon="ui-icon-disk" action="#{internshipMB.navigateToEditPage}"
+							value="Delete" ajax="true">
+							<f:param name="passed_internship_id"
+								value="#{internship.id_internship}" />
+							<f:param name="passed_student_id"
+								value="#{internship.fk_student_id}" />
+						</p:commandButton>
+					</p:column>
+
+
+				</p:dataTable>
+
+			</h:form>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

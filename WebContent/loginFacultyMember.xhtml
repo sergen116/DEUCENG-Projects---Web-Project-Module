@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition
+		template="/template/commonFacultyMember/commonLayoutFacultyMember.xhtml">
+		<ui:define name="betweenHeaderAndContent">
+			<h:form>
+				<p:growl id="messages" />
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton type="button" value="Projects"
+							disabled="true" />
+						<span class="ui-separator"> <span
+							class="ui-icon ui-icon-grip-dotted-vertical" />
+						</span>
+						<p:commandButton type="button" value="Search"
+							disabled="true" />
+
+						<span class="ui-separator"> <span
+							class="ui-icon ui-icon-grip-dotted-vertical" />
+						</span>
+
+						<p:commandButton type="button" value="New Project"
+							disabled="true" />
+
+					</f:facet>
+
+					<f:facet name="right">
+						<p:commandButton type="button" value="Logout"
+							icon="ui-icon-extlink" disabled="true" />
+					</f:facet>
+
+				</p:toolbar>
+			</h:form>
+		</ui:define>
+
+		<ui:define name="content">
+
+			<h:form>
+				<p:spacer height="10" />
+				<p:growl id="messages"  />
+				<!-- <p:messages id="messages"  autoUpdate="true" />  -->
+
+				<h:panelGrid id="matchGrid" styleClass="loginForm" columns="2"
+					cellpadding="5">
+					<p:outputLabel for="inputEmail" value="Email :" />
+					<p:inputText id="inputEmail" value="#{facultyMemberMB.email}"
+						required="true"
+						requiredMessage="Email : You must enter your email address"
+						placeholder="derya.birant@ceng.deu.edu.tr"
+						style=" width : 179px; height : 20px;"
+						>
+						<f:validator validatorId="com.validators.EmailValidator" />
+					</p:inputText>
+
+					<p:outputLabel for="inputPassword" value="Password :" />
+					<p:password id="inputPassword" value="#{facultyMemberMB.password}"
+						requiredMessage="Password : Please enter the password"
+						required="true"
+						placeholder="12341903" />
+
+					<p:commandButton style=" background-color: #3366ff;  color:white"
+						icon="ui-icon-person" update="messages"
+						action="#{facultyMemberMB.isLoginInformationTrue}" value="Login"
+						ajax="true">
+					</p:commandButton>
+
+				</h:panelGrid>
+
+
+			</h:form>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

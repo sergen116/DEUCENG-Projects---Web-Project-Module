@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/common/commonLayout.xhtml">
+
+		<ui:define name="content">
+			<h:form>
+				<h:panelGrid columns="2" style="margin: 0 auto; margin-top: 50px;  "
+					cellpadding="5">
+
+					<p:selectOneRadio id="selection" value="#{utilsMB.initialChoice}">
+						<f:selectItem itemLabel="Faculty Member"
+							itemValue="loginFacultyMember.xhtml" />
+						<f:selectItem itemLabel="Student" itemValue="loginStudent.xhtml" />
+						<f:selectItem itemLabel="Admin" itemValue="loginAdmin.xhtml" />
+					</p:selectOneRadio>
+
+				</h:panelGrid>
+
+				<h:panelGroup style="display:block; text-align:center">
+					<p:commandButton action="#{utilsMB.navigateForUserChoice}"
+						value="Submit" ajax="false"
+						style="margin: 0 auto; margin-top: 50px;" />
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition
+		template="/template/commonFacultyMember/commonLayoutFacultyMember.xhtml">
+
+		<ui:define name="content">
+
+			<h:form id="form">
+				<p:spacer height="100" />
+				<p:growl id="msgs" />
+
+				<p:accordionPanel value="#{facultyMemberMB.projects}" var="project">
+					<p:tab title="Project : #{project.project_name}">
+						<h:panelGrid columns="2" cellpadding="5">
+
+							<h:outputText value="Deadline:" style="font-weight: bold" />
+							<h:outputText value="#{project.deadline}" />
+
+							<h:outputText value="Assigned Assistant:"
+								style="font-weight: bold" />
+							<h:outputText value="#{project.assigned_assistant}" />
+
+						</h:panelGrid>
+						<h:panelGrid columns="2" cellpadding="5">
+							<ui:repeat value="#{project.studentsOfProject}" var="student">
+								<p:outputLabel value="Student :   " style="font-weight: bold" />
+								<p:outputLabel style="color:blue;"
+									value="#{student.firstname} #{student.lastname}  " />
+							</ui:repeat>
+						</h:panelGrid>
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:commandButton
+								style=" width: 150px; background-color: #3366ff;  color:white"
+								icon="ui-icon-disk" action="#{newProjectMB.navigate_To_Edit_Page}"
+								value="Edit" ajax="true">
+								<f:param name="passed_project_id"
+									value="#{project.id_project}" />
+								
+							</p:commandButton>
+							<p:commandButton
+								style=" width: 150px; background-color: #3366ff;  color:white"
+								icon="ui-icon-disk" action="#{newProjectMB.deleteProject}"
+								value="Delete" ajax="true">
+								<f:param name="passed_project_id_for_deletion"
+									value="#{project.id_project}" />
+							
+							</p:commandButton>
+
+						</h:panelGrid>
+					</p:tab>
+				</p:accordionPanel>
+			</h:form>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

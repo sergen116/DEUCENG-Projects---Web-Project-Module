@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<ui:composition
+		template="/template/commonAdmin/commonLayoutAdmin.xhtml">
+
+		<ui:define name="content">
+			<h:form>
+				<p:spacer height="100" />
+				<p:growl id="messages" />
+				<!-- <p:messages id="messages"  autoUpdate="true" />  -->
+
+				<p:dataTable var="internship" value="#{internshipMB.allInternships}"
+					scrollable="true" scrollHeight="120">
+					<p:column headerText="Student">
+						<h:outputText value="#{internship.student}" />
+					</p:column>
+					<p:column headerText="Start Date">
+						<h:outputText value="#{internship.start_date}" />
+					</p:column>
+					<p:column headerText="End Date">
+						<h:outputText value="#{internship.end_date}" />
+					</p:column>
+					<p:column headerText="Company">
+						<h:outputText value="#{internship.company_name}" />
+					</p:column>
+					<p:column headerText="Work Area">
+						<h:outputText value="#{internship.working_areas}" />
+					</p:column>
+					<p:column headerText="Type">
+						<h:outputText value="#{internship.type}" />
+					</p:column>
+					<p:column headerText="Update">
+						<p:commandButton 
+							style=" width: 150px; background-color: #3366ff;  color:white"
+							icon="ui-icon-disk" action="#{internshipMB.navigateToEditPage}"
+							value="Edit" ajax="true">
+							<f:param name="passed_internship_id" value="#{internship.id_internship}" />
+							<f:param name="passed_student_id" value="#{internship.fk_student_id}" />
+						</p:commandButton>
+					</p:column>
+					<p:column headerText="Remove" >
+						
+						<p:commandButton 
+							style=" width: 150px; background-color: #3366ff;  color:white"
+							icon="ui-icon-disk" action="#{internshipMB.navigateToEditPage}"
+							value="Delete" ajax="true">
+							<f:param name="passed_internship_id" value="#{internship.id_internship}" />
+							<f:param name="passed_student_id" value="#{internship.fk_student_id}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

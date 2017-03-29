@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition template="/template/commonAdmin/commonLayoutAdmin.xhtml">
+		<ui:define name="betweenHeaderAndContent">
+			<h:form>
+			<p:growl id="messages" />
+
+			<p:menubar>
+				<p:submenu label="Internship" icon="ui-icon-document">
+					<p:menuitem value="List" url="#" actionListener="#{menuView.save}"
+						disabled="true" />
+					<p:menuitem value="Add" url="#" actionListener="#{menuView.save}"
+						disabled="true" />
+					<p:menuitem value="Search" url="#"
+						actionListener="#{menuView.save}" disabled="true" />
+				</p:submenu>
+
+				<p:submenu label="Student" icon="ui-icon-document">
+					<p:menuitem value="List" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="true" />
+					<p:menuitem value="Add" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="true" />
+					<p:menuitem value="Search" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="true" />
+				</p:submenu>
+
+				<p:submenu label="Faculty Member" icon="ui-icon-document">
+					<p:menuitem value="List" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="true" />
+					<p:menuitem value="Add" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="true" />
+					<p:menuitem value="Search" url="#" update="messages"
+						actionListener="#{menuView.save}" disabled="true" />
+				</p:submenu>
+
+				<f:facet name="options">
+					<p:commandButton type="button" value="Logout"
+						icon="ui-icon-extlink" disabled="true" />
+				</f:facet>
+			</p:menubar>
+		</h:form>
+		</ui:define>
+		
+		<ui:define name="content">
+
+				<h:form >
+				<p:spacer height="10" />
+ 				<p:growl id="messages"/>
+				<!-- <p:messages id="messages"  autoUpdate="true" />  -->
+				
+				<h:panelGrid id="matchGrid" styleClass="loginForm"  columns="2" cellpadding="5" >
+					<p:outputLabel for="inputUsername" value="Username :" /> 
+					<p:inputText id="inputUsername"
+						value="#{adminMB.username}" 
+						required="true"
+						requiredMessage="Username : You must enter username" 
+						style=" width : 179px; height : 20px;"
+						validatorMessage="Firstname : min.3 or max.15 characters AND It cannot consist of numerical values">
+						<f:validateRegex pattern="^[A-Za-z]{3,}$" />
+					</p:inputText>
+
+					<p:outputLabel for="inputPassword" value="Password :" />
+					<p:password id="inputPassword"
+						value="#{adminMB.password}"
+						requiredMessage="Password : Please enter a password"
+						required="true" />
+					
+					<p:commandButton style=" background-color: #3366ff;  color:white" 
+								icon="ui-icon-person" 
+								update="messages"
+								 action="#{adminMB.isLoginInformationTrue}" value="Login" ajax="true" >
+					</p:commandButton>
+					
+				</h:panelGrid>
+				
+				 
+			</h:form>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>

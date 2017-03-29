@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+	<ui:composition
+		template="/template/commonFacultyMember/commonLayoutFacultyMember.xhtml">
+
+		<ui:define name="content">
+
+			<h:form>
+				<p:spacer height="10" />
+				<p:growl id="messages" />
+				<!-- <p:messages id="messages"  autoUpdate="true" />  -->
+
+				<h:panelGrid id="matchGrid" styleClass="loginForm" columns="2"
+					cellpadding="5">
+					
+					<p:outputLabel for="projectSelection" value="Project :" />
+					<p:selectOneMenu id="projectSelection"
+						value="#{milestoneMB.project}" converter="#{projectConverter}"
+						var="t"
+						required="true"
+					    height="130"
+						style="height:30px;"
+						filter="true" effect="fade"
+						filterMatchMode="contains">
+						<f:selectItems value="#{milestoneMB.projects_of_facultyMember}"
+							var="project" itemValue="#{project}" itemLabel="#{project}" />
+
+						<p:column>
+							<h:outputText value="#{t}" />
+						</p:column>
+					</p:selectOneMenu>
+					
+					
+					<p:outputLabel for="MilestoneDeadline" value="Deadline :" />
+					<p:calendar id="MilestoneDeadline" value="#{milestoneMB.deadline}"
+						required="true" pattern="yyyy-MM-dd"
+						requiredMessage="Deadline : You must fill the field"
+						converterMessage="Deadline : Invalid ! Expected format 2016-06-21">
+						<p:ajax event="dateSelect" listener="#{milestoneMB.onDateSelect}"
+							update="messages" />
+						<f:convertDateTime pattern="yyyy-MM-dd" />
+					</p:calendar>
+
+
+					<p:outputLabel for="shortSummary" value="Short Summary :" />
+					<p:inputTextarea id="shortSummary" value="#{milestoneMB.short_summary}"
+						rows="5" cols="30"
+						required="true"
+						requiredMessage="Short Summary : You must fill the field">
+					</p:inputTextarea>
+					
+					
+					<p:commandButton style=" background-color: #3366ff;  color:white"
+						icon="ui-icon-disk" update="messages"
+						action="#{milestoneMB.addMilestone}" value="Submit" ajax="true">
+					</p:commandButton>
+
+				</h:panelGrid>
+			</h:form>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>
